@@ -1,8 +1,10 @@
 package perftest
 
 import bugwork.City
+import bugwork.CityWithNonFieldProperties
 import bugwork.CityWithTrait
 import bugwork.StaticallyCompiledCity
+import bugwork.StaticallyCompiledCityWithNonFieldProperties
 import bugwork.StaticallyCompiledCityWithTrait
 import org.springframework.util.StopWatch
 
@@ -15,18 +17,26 @@ class BootStrap {
         benchmarkDatabinding(City)
         benchmarkDatabinding(City)
 
-        benchmarkDatabinding(StaticallyCompiledCity)
-        benchmarkDatabinding(StaticallyCompiledCity)
+        benchmarkDatabinding(CityWithNonFieldProperties)
+        benchmarkDatabinding(CityWithNonFieldProperties)
 
         benchmarkDatabinding(CityWithTrait)
         benchmarkDatabinding(CityWithTrait)
+
+        benchmarkDatabinding(StaticallyCompiledCity)
+        benchmarkDatabinding(StaticallyCompiledCity)
+
+        benchmarkDatabinding(StaticallyCompiledCityWithNonFieldProperties)
+        benchmarkDatabinding(StaticallyCompiledCityWithNonFieldProperties)
 
         benchmarkDatabinding(StaticallyCompiledCityWithTrait)
         benchmarkDatabinding(StaticallyCompiledCityWithTrait)
 
         benchmarkManualAssignment(City)
-        benchmarkManualAssignment(StaticallyCompiledCity)
+        benchmarkManualAssignment(CityWithNonFieldProperties)
         benchmarkManualAssignment(CityWithTrait)
+        benchmarkManualAssignment(StaticallyCompiledCity)
+        benchmarkManualAssignment(StaticallyCompiledCityWithNonFieldProperties)
         benchmarkManualAssignment(StaticallyCompiledCityWithTrait)
 
     }
