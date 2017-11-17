@@ -2,10 +2,12 @@ package perftest
 
 import bugwork.City
 import bugwork.CityWithTrait
+import bugwork.StaticallyCompiledCity
+import bugwork.StaticallyCompiledCityWithTrait
 import org.springframework.util.StopWatch
 
 class BootStrap {
-    Long count = 1_000_00_0
+    Long count = 100_000
     Map props = ['name': 'test', 'shortCode':'test', state:"Gujarat", "country": "india", 'latitude':"10.10", 'longitude': "10.10"]
 
 
@@ -13,19 +15,27 @@ class BootStrap {
         benchmarkDatabinding(City)
         benchmarkDatabinding(City)
 
+        benchmarkDatabinding(StaticallyCompiledCity)
+        benchmarkDatabinding(StaticallyCompiledCity)
+
         benchmarkDatabinding(CityWithTrait)
         benchmarkDatabinding(CityWithTrait)
 
+        benchmarkDatabinding(StaticallyCompiledCityWithTrait)
+        benchmarkDatabinding(StaticallyCompiledCityWithTrait)
+
         benchmarkManualAssignment(City)
+        benchmarkManualAssignment(StaticallyCompiledCity)
         benchmarkManualAssignment(CityWithTrait)
+        benchmarkManualAssignment(StaticallyCompiledCityWithTrait)
 
     }
 
     void benchmarkDatabinding(Class domain) {
         StopWatch watch = new StopWatch()
+        def instance = domain.newInstance()
         watch.start()
         for (int i in (1..count)) {
-            def instance = domain.newInstance()
             instance.properties = props
         }
         watch.stop()
@@ -34,9 +44,9 @@ class BootStrap {
 
     void benchmarkManualAssignment(Class domain) {
         StopWatch watch = new StopWatch()
+        def instance = domain.newInstance()
         watch.start()
         for (int i in (1..count)) {
-            def instance = domain.newInstance()
             instance.name = props['name']
             instance.shortCode = props['shortCode']
             instance.state = props['state']
